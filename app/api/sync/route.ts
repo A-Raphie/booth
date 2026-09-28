@@ -25,7 +25,12 @@ export async function POST(req: Request) {
   }
 
   const out = new FormData();
-  out.append("audio", audio);
+  // force the audio/wav content type: upstream rejects application/octet-stream
+  out.append(
+    "audio",
+    new Blob([await audio.arrayBuffer()], { type: "audio/wav" }),
+    "take.wav",
+  );
   out.append(
     "config",
     JSON.stringify({ timestamps: true, language_codes: "en" }),
