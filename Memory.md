@@ -24,6 +24,7 @@
 
 ## Progress log
 - **Sep 28 ~23:35** — v1 complete: build green, smoke tests pass, pushed to github.com/A-Raphie/booth. Live-audio verification pending (needs key).
+- **Sep 28 ~23:59** — VERIFIED on real API: key fetched from dashboard via IAB (stashed in .env.local, gitignored); token mint OK; sync OK (415 fix: force audio/wav part type); headless WS test OK — voice `alba` valid, inline tools fire, `call_retake` caught a planted number flub and the agent spoke the cut, session.end clean. Findings: turn detection treats the tightly-paced synthetic read as one turn (real readers pause; client numeric detector + nudge is the backup); `reply.create` field name still unverified (backup path only).
 
 ## Things to not forget
 - ASSEMBLYAI_API_KEY needed from raphie before live deploy; BYO-key fallback built in.

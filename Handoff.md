@@ -3,26 +3,27 @@
 Read this first if you're picking up the project.
 
 ## Current state
-Full v1 built and pushed (Sep 28, ~23:35 WAT): Voice Agent director loop, take engine, splicer, booth UI, landing front door, deterministic demo widget, README + submission package. `npm run build` green; smoke tests pass (pages render, API routes 401 correctly without a key, demo asset serves). NOT yet verified with real audio: the live agent loop and sync transcription both need a real API key.
+Full v1 built AND verified against the real AssemblyAI API (Sep 28, ~23:59 WAT). Key obtained from the dashboard via IAB, stored in `.env.local` (gitignored). Token minting works; sync transcription works on real audio (73 words, all timestamped, planted flubs visible in transcript); the Voice Agent WS loop works headless: greeting audio, user transcript, a real `call_retake` tool call with a spoken cut line, clean session.end, zero errors. Remaining unverified in-browser only: mic AudioWorklet path and browser playback (needs raphie's ears + mic), and the `reply.create` nudge field name (backup path only).
 
 ## What's done
 - Idea pass + design + naming + spec docs (see ORCHESTRATOR.md ledger)
-- `/api/token` (temp token mint) and `/api/sync` (universal-3.5-pro proxy, timestamps)
+- `/api/token` (temp token mint) and `/api/sync` (universal-3.5-pro proxy, timestamps, audio/wav typing fix)
 - `lib/voice-agent.ts` (WS client: inline config, tools, reply.create, session.end discipline)
 - `lib/capture.ts` + `public/pcm-processor.js` (AudioWorklet mic → 24k WS feed + full-rate master)
 - `lib/script.ts` (parsing, token Levenshtein, numeric-flub detection), `lib/takes.ts`, `lib/splice.ts`
 - `/booth` (script → live → wrapped phases, slate stamp, level strip, take log, master download)
 - Landing with live proof widget running the real pipeline on `public/badtake.wav` (macOS-synthesized bad take, misreads planted on lines 3 and 7)
 - README (judge path + honesty table), docs/submission/ (OVERVIEW, RUBRIC_MAP, DEMO_SCRIPT), og.png
-- Repo: https://github.com/A-Raphie/booth (pushed)
+- `scripts/ws-protocol-test.mjs` — repeatable headless verification of the whole agent loop
+- Repo: https://github.com/A-Raphie/booth (pushed through commit b554301)
 
 ## In progress
-- Nothing mid-flight; next is the live-audio verification block.
+- Nothing mid-flight; deploy is the next gate.
 
 ## Blocked / waiting
-- **ASSEMBLYAI_API_KEY** from raphie: needed for the deployed token/sync routes and for any live testing.
-- **Deploy go**: Vercel deploy is a stop-condition item per AGENTS.md (publishing) — awaiting explicit go.
+- **Deploy go**: Vercel deploy is a stop-condition item per AGENTS.md (publishing) — awaiting explicit go. Key is ready to set as env var.
 - **Submission go**: lablab submission happens only on explicit go.
+- Account note: AssemblyAI Free plan with $99.99 credits; agent sessions bill from it.
 
 ## How to run it
 ```bash
