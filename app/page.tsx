@@ -69,7 +69,7 @@ export default function Home() {
         <div className="mt-8 grid gap-px bg-ink/10 md:grid-cols-4">
           {STEPS.map((s) => (
             <div key={s.n} className="bg-paper p-6">
-              <div className="microlabel text-accent">{s.n}</div>
+              <div className="microlabel text-accent-text">{s.n}</div>
               <h3 className="mt-4 font-display text-lg font-medium">{s.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-ink-soft">{s.body}</p>
             </div>

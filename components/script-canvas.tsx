@@ -4,10 +4,10 @@ import { ScriptLine } from "@/lib/script";
 import { LineStatus } from "@/lib/takes";
 
 const STATUS_MARK: Record<LineStatus, { glyph: string; color: string; label: string }> = {
-  untouched: { glyph: "·", color: "var(--color-muted)", label: "unread" },
+  untouched: { glyph: "·", color: "var(--color-ink-fade)", label: "unread" },
   clean: { glyph: "✓", color: "var(--color-clean-deep)", label: "clean" },
   flub: { glyph: "×", color: "var(--color-cut-text)", label: "flub" },
-  "retake-pending": { glyph: "↻", color: "var(--color-accent)", label: "retake" },
+  "retake-pending": { glyph: "↻", color: "var(--color-accent-text)", label: "retake" },
 };
 
 /** The script sheet: the hero surface. Margins carry take state. */

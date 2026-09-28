@@ -9,8 +9,9 @@
   --color-muted: #c7c3b2;
   --color-ink: #0a0a08;
   --color-ink-soft: #43413a;
-  --color-ink-fade: #80838d;
-  --color-accent: #887bdd;
+  --color-ink-fade: #66686f; /* 5.0:1 on paper; the old #80838d was 3.4:1 (AA fail) */
+  --color-accent: #887bdd; /* large numerals + tints only */
+  --color-accent-text: #6f5bd6; /* 4.6:1 for small violet text */
   --color-accent-tint: #e8e4f9;
   --color-mark: #f7e9a1;
   --color-cut: #d47849;
@@ -50,7 +51,7 @@ body {
 
 input::placeholder,
 textarea::placeholder {
-  color: var(--color-muted);
+  color: var(--color-ink-fade);
 }
 
 /* mono micro-label: console convention */

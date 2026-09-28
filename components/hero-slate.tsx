@@ -21,7 +21,7 @@ export function HeroSlate() {
         {lines.map((l) => (
           <div key={l.n} className="flex items-baseline gap-3">
             <span
-              className={`microlabel w-7 shrink-0 text-right ${l.state === "retake" ? "text-cut-text" : "text-muted"}`}
+              className={`microlabel w-7 shrink-0 text-right ${l.state === "retake" ? "text-cut-text" : "text-ink-fade"}`}
             >
               {l.n}
             </span>
@@ -53,7 +53,7 @@ export function HeroSlate() {
             />
           ),
         )}
-        <span className="microlabel ml-3 text-ink-fade">Cut. Line three: four cups.</span>
+        <span className="microlabel ml-3">Cut. Line three: four cups.</span>
       </div>
     </div>
   );
