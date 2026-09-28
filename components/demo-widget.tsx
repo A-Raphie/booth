@@ -92,10 +92,10 @@ export function DemoWidget() {
               {parseScript(script.body).map((l) => {
                 const bad = flubs.includes(l.n);
                 return (
-                  <li key={l.n} className={`flex gap-3 text-sm ${bad ? "text-cut-deep" : "text-ink-soft"}`}>
+                  <li key={l.n} className={`flex gap-3 text-sm ${bad ? "text-cut-text" : "text-ink-soft"}`}>
                     <span className="microlabel w-8 shrink-0 pt-0.5 text-right">{String(l.n).padStart(2, "0")}</span>
                     <span>{l.text}</span>
-                    {bad && <span className="microlabel shrink-0 pt-0.5 text-cut-deep">↻ retake</span>}
+                    {bad && <span className="microlabel shrink-0 pt-0.5 text-cut-text">↻ retake</span>}
                   </li>
                 );
               })}
@@ -104,7 +104,7 @@ export function DemoWidget() {
           {state === "done" && masterNote && (
             <p className="microlabel mt-4 text-ink-fade">{masterNote}</p>
           )}
-          {state === "error" && <p className="mt-3 text-sm text-cut-deep">{note}</p>}
+          {state === "error" && <p className="mt-3 text-sm text-cut-text">{note}</p>}
         </div>
       )}
     </Panel>

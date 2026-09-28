@@ -353,7 +353,7 @@ export default function BoothPage() {
 
   if (phase === "script") {
     return (
-      <main className="mx-auto max-w-5xl px-6 py-14">
+      <main className="mx-auto max-w-6xl px-6 py-14">
         <Link href="/" className="microlabel text-ink-fade hover:text-ink">
           ← Booth
         </Link>
@@ -378,7 +378,7 @@ export default function BoothPage() {
           onChange={(e) => setScriptText(e.target.value)}
           rows={14}
           spellCheck={false}
-          className="hairline mt-6 w-full resize-y bg-raised p-6 font-mono text-sm leading-relaxed outline-none focus:border-accent"
+          className="hairline mt-6 w-full resize-none bg-raised p-6 font-mono text-sm leading-relaxed outline-none focus:border-accent"
         />
 
         <div className="mt-6 flex items-center gap-4">
@@ -404,7 +404,7 @@ export default function BoothPage() {
             </div>
           </Panel>
         )}
-        {error && <p className="mt-4 max-w-prose text-sm text-cut-deep">{error}</p>}
+        {error && <p className="mt-4 max-w-prose text-sm text-cut-text">{error}</p>}
         <p className="microlabel mt-10 text-ink-fade">
           Mic on · echo cancellation on · audio never leaves your browser except as text
         </p>
@@ -414,7 +414,7 @@ export default function BoothPage() {
 
   if (phase === "live") {
     return (
-      <main className="mx-auto max-w-5xl px-6 py-10">
+      <main className="mx-auto max-w-6xl px-6 py-10">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <span className="rec-dot inline-block h-2.5 w-2.5 rounded-full bg-cut" />
@@ -461,7 +461,7 @@ export default function BoothPage() {
               </div>
               <p className="microlabel mt-3 text-ink-fade">Line {String(currentLine ?? 1).padStart(2, "0")} is up</p>
             </Panel>
-            {error && <Panel className="p-4 text-sm text-cut-deep">{error}</Panel>}
+            {error && <Panel className="p-4 text-sm text-cut-text">{error}</Panel>}
           </aside>
         </div>
       </main>
@@ -469,7 +469,7 @@ export default function BoothPage() {
   }
 
   return (
-    <main className="mx-auto max-w-5xl px-6 py-14">
+    <main className="mx-auto max-w-6xl px-6 py-14">
       <MicroLabel>Session complete</MicroLabel>
       <h1 className="mt-3 font-display text-4xl font-medium tracking-tight md:text-5xl">
         That's a print.
@@ -528,7 +528,7 @@ export default function BoothPage() {
           Home
         </Link>
       </div>
-      {error && <p className="mt-4 text-sm text-cut-deep">{error}</p>}
+      {error && <p className="mt-4 text-sm text-cut-text">{error}</p>}
     </main>
   );
 }

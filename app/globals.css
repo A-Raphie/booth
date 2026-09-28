@@ -15,6 +15,7 @@
   --color-mark: #f7e9a1;
   --color-cut: #d47849;
   --color-cut-deep: #c66b3e;
+  --color-cut-text: #9b483e;
   --color-clean: #67ad82;
   --color-clean-deep: #01762f;
 
@@ -58,6 +59,24 @@ textarea::placeholder {
   font-size: 0.6875rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+  color: var(--color-ink-soft);
+}
+
+/* paper-toned scrollbar: the default dark thumb clashes with cream */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-paper);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-muted);
+  border: 2px solid var(--color-paper);
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-ink-fade);
 }
 
 /* the slate stamp: single hard snap, then still */

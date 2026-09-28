@@ -31,3 +31,5 @@
 - Capture a real "bad take" recording during Phase 1 testing → bundle for demo mode.
 - Submit by Sep 30 18:00 WAT (official hour unpublished).
 - README credits "Raphie" only.
+- **Sep 29 ~00:40** — vision-flash UI judgment (7 shots, 7-8/10): register applied in one pass (wordmark bar, hero session card, micro-label contrast to ink-soft, cut-text token #9b483e for small marks, unified max-w-6xl containers, scrollbar + resize-grip polish, code sample aligned to demo slates, spacing tightened). Redeployed; hero re-shot on prod.
+- **Sep 29 ~00:30** — deployed: https://booth-ernxtos-projects.vercel.app (Vercel, project "booth", env key set, SSO protection disabled). Live /api/token verified; all assets 200; links audited.

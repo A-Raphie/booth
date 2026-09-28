@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { DemoWidget } from "@/components/demo-widget";
+import { HeroSlate } from "@/components/hero-slate";
 
 const STEPS = [
   {
@@ -27,35 +28,43 @@ const STEPS = [
 export default function Home() {
   return (
     <main className="mx-auto max-w-6xl px-6">
+      {/* Wordmark bar */}
+      <header className="flex items-center justify-between border-b border-ink/10 py-5">
+        <span className="microlabel text-ink">Booth</span>
+        <span className="microlabel text-ink-fade">Voiceover studio · v1</span>
+      </header>
+
       {/* Hero */}
-      <section className="pt-20 md:pt-28">
-        <p className="microlabel text-ink-fade">Voiceover recording · real-time direction</p>
-        <h1 className="mt-6 max-w-4xl font-display text-6xl font-medium leading-[0.95] tracking-tight md:text-8xl">
-          The director is listening.
-        </h1>
-        <p className="mt-8 max-w-2xl text-xl leading-relaxed text-ink-soft">
-          Read your voiceover script out loud. Booth hears every flub, cuts you off with the
-          exact line to redo, and hands you a clean master when you wrap. You never open an
-          editor for VO again.
-        </p>
-        <div className="mt-10 flex flex-wrap items-center gap-4">
-          <Link
-            href="/booth"
-            className="microlabel bg-ink px-7 py-4 text-paper transition-colors hover:bg-ink-soft"
-          >
-            Enter the booth →
-          </Link>
-          <span className="microlabel text-ink-fade">Chrome or Edge · microphone · 2 minutes</span>
+      <section className="grid items-center gap-12 pt-16 md:mt-6 md:grid-cols-[1.15fr_1fr] md:pt-24">
+        <div>
+          <p className="microlabel">Voiceover recording · real-time direction</p>
+          <h1 className="mt-6 font-display text-6xl font-medium leading-[0.95] tracking-tight md:text-8xl">
+            The director is listening.
+          </h1>
+          <p className="mt-8 max-w-xl text-xl leading-relaxed text-ink-soft">
+            Read your voiceover script out loud. Booth hears every flub, cuts you off with the
+            exact line to redo, and hands you a clean master when you wrap.
+          </p>
+          <div className="mt-10 flex flex-wrap items-center gap-4">
+            <Link
+              href="/booth"
+              className="microlabel bg-ink px-7 py-4 text-paper transition-colors hover:bg-ink-soft"
+            >
+              Enter the booth →
+            </Link>
+            <span className="microlabel text-ink-fade">Chrome or Edge · microphone · 2 minutes</span>
+          </div>
         </div>
+        <HeroSlate />
       </section>
 
       {/* Live proof */}
-      <section className="mt-20 md:mt-28">
+      <section className="mt-16 md:mt-24">
         <DemoWidget />
       </section>
 
       {/* How it works */}
-      <section className="mt-20 md:mt-28">
+      <section className="mt-16 md:mt-20">
         <p className="microlabel text-ink-fade">The session</p>
         <div className="mt-8 grid gap-px bg-ink/10 md:grid-cols-4">
           {STEPS.map((s) => (
@@ -69,7 +78,7 @@ export default function Home() {
       </section>
 
       {/* Numbers */}
-      <section className="mt-20 md:mt-28">
+      <section className="mt-16 md:mt-20">
         <div className="hairline grid grid-cols-1 bg-raised md:grid-cols-3">
           <div className="p-8">
             <div className="font-display text-5xl font-medium">45 min</div>
@@ -87,8 +96,8 @@ export default function Home() {
       </section>
 
       {/* Dev section: the sponsor primitive, shown not told */}
-      <section className="mt-20 md:mt-28">
-        <p className="microlabel text-ink-fade">Under the glass</p>
+      <section className="mt-16 md:mt-20">
+        <p className="microlabel">Under the glass</p>
         <div className="mt-8 grid gap-8 md:grid-cols-2">
           <div>
             <h2 className="font-display text-3xl font-medium tracking-tight">
@@ -132,9 +141,9 @@ await ws.send(JSON.stringify({
 // the money moment, as an event
 { "type": "tool.call",
   "name": "call_retake",
-  "arguments": { "from_line": 4,
-                 "reason": "said twelve,
-                            script says eighteen" } }`}
+  "arguments": { "from_line": 3,
+                 "reason": "said two cups,
+                            script says four" } }`}
           </pre>
         </div>
       </section>
@@ -155,10 +164,8 @@ await ws.send(JSON.stringify({
       </section>
 
       <footer className="flex flex-wrap items-center justify-between gap-4 border-t border-ink/10 py-8">
-        <span className="microlabel text-ink-fade">Booth · built by Raphie</span>
-        <span className="microlabel text-ink-fade">
-          AssemblyAI Voice Agent API · sync universal-3.5-pro
-        </span>
+        <span className="microlabel">Booth · built by Raphie</span>
+        <span className="microlabel">AssemblyAI Voice Agent API · sync universal-3.5-pro</span>
       </footer>
     </main>
   );

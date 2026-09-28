@@ -36,7 +36,7 @@ export function TakeLog({
               s === "clean"
                 ? "text-clean-deep"
                 : s === "flub" || s === "retake-pending"
-                  ? "text-cut-deep"
+                  ? "text-cut-text"
                   : "text-ink-fade";
             return (
               <tr key={l.n} className="hairline border-t-0 border-b">

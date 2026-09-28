@@ -6,7 +6,7 @@ import { LineStatus } from "@/lib/takes";
 const STATUS_MARK: Record<LineStatus, { glyph: string; color: string; label: string }> = {
   untouched: { glyph: "·", color: "var(--color-muted)", label: "unread" },
   clean: { glyph: "✓", color: "var(--color-clean-deep)", label: "clean" },
-  flub: { glyph: "×", color: "var(--color-cut-deep)", label: "flub" },
+  flub: { glyph: "×", color: "var(--color-cut-text)", label: "flub" },
   "retake-pending": { glyph: "↻", color: "var(--color-accent)", label: "retake" },
 };
 
