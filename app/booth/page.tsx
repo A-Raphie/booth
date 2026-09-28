@@ -14,6 +14,13 @@ import { buildSystemPrompt, parseScript, scoreSegmentAgainstScript, tokenize } f
 import { SAMPLE_SCRIPTS } from "@/lib/samples";
 import { alignWordsToLines, buildMasterFromSpans, buildRawTake, Word } from "@/lib/splice";
 import { encodeWav } from "@/lib/audio-utils";
+import {
+  chunkForSync,
+  concatInt16,
+  downsampleInt16,
+  offsetWords,
+  TRANSCRIBE_RATE,
+} from "@/lib/transcribe";
 
 type Phase = "script" | "live" | "wrapped";
 
@@ -302,18 +309,26 @@ export default function BoothPage() {
       if (take && take.durationMs > 2000) {
         try {
           setStatusNote("Listening back");
-          const wav = encodeWav(take.chunks, take.sampleRate);
           setRawUrl(URL.createObjectURL(buildRawTake(take.chunks, take.sampleRate)));
-          const form = new FormData();
-          form.append("audio", new File([wav], "session.wav", { type: "audio/wav" }));
-          const res = await fetch("/api/sync", {
-            method: "POST",
-            headers: getKeyHeaders(),
-            body: form,
-          });
-          if (!res.ok) throw new Error("sync transcription failed");
-          const data = (await res.json()) as { words?: Word[] };
-          const spans = alignWordsToLines(data.words ?? [], linesRef.current);
+          // downsample + split: serverless body limits and the sync API's 120 s
+          // ceiling both require chunked transcription for real sessions
+          const pcm16k = downsampleInt16(concatInt16(take.chunks), take.sampleRate);
+          const parts = chunkForSync(pcm16k, TRANSCRIBE_RATE);
+          const words: Word[] = [];
+          for (const part of parts) {
+            const wav = encodeWav([part.pcm], TRANSCRIBE_RATE);
+            const form = new FormData();
+            form.append("audio", new File([wav], "part.wav", { type: "audio/wav" }));
+            const res = await fetch("/api/sync", {
+              method: "POST",
+              headers: getKeyHeaders(),
+              body: form,
+            });
+            if (!res.ok) throw new Error("sync transcription failed");
+            const data = (await res.json()) as { words?: Word[] };
+            words.push(...offsetWords(data.words ?? [], part.offsetMs));
+          }
+          const spans = alignWordsToLines(words, linesRef.current);
           const built = buildMasterFromSpans(take.chunks, take.sampleRate, spans);
           setMaster({
             url: URL.createObjectURL(built.blob),
