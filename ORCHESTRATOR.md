@@ -7,7 +7,7 @@ Event: AssemblyAI Voice Agent Hackathon (lablab.ai) · Deadline: Sep 30, 2026 (t
 | 0 Calibrate | Sep 28 | Sep 28 | forensic playbook read; idea-hack run; hackathon-design done |
 | 1 Idea | Sep 28 | Sep 28 | 3 candidates pitched; Booth chosen by raphie ("go") |
 | 2 Plan+design | Sep 28 | Sep 28 | spec + design.md + naming done; validation trio skipped (≤48h compression rule) |
-| 3 Build | Sep 28 | — | in progress |
+| 3 Build | Sep 28 | — | v1 pushed; live-audio verification pending (key blocker) |
 
 ## Skill ledger
 | Skill | Stage | State | Note |

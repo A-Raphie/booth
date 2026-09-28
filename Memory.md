@@ -19,6 +19,11 @@
 - Audio before `session.ready` is discarded; AudioContext must start in a user gesture.
 - Sync API requires `X-AAI-Model: universal-3-5-pro` header and multipart `audio` binary part.
 - Chromium: `new AudioContext({sampleRate: 24000})` shortcut; Safari/FF need manual resample in worklet.
+- Single-word misreads score ~0.86 similarity on 7-word lines: numeric-token mismatch check is the only reliable client-side flub signal for numbers; the agent LLM is the primary judge.
+- `say` + `afconvert` produce the bundled bad take; regenerate with `say -v Samantha -r 150 -o /tmp/badtake.aiff -f /tmp/badtake.txt` then `afconvert -f WAVE -d LEI16@44100 -c 1`.
+
+## Progress log
+- **Sep 28 ~23:35** — v1 complete: build green, smoke tests pass, pushed to github.com/A-Raphie/booth. Live-audio verification pending (needs key).
 
 ## Things to not forget
 - ASSEMBLYAI_API_KEY needed from raphie before live deploy; BYO-key fallback built in.

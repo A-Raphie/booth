@@ -3,34 +3,44 @@
 Read this first if you're picking up the project.
 
 ## Current state
-Spec layer complete; Next.js scaffold finishing. No app code yet. Target: submit Sep 30, 18:00 WAT to the AssemblyAI Voice Agent Hackathon (lablab.ai).
+Full v1 built and pushed (Sep 28, ~23:35 WAT): Voice Agent director loop, take engine, splicer, booth UI, landing front door, deterministic demo widget, README + submission package. `npm run build` green; smoke tests pass (pages render, API routes 401 correctly without a key, demo asset serves). NOT yet verified with real audio: the live agent loop and sync transcription both need a real API key.
 
 ## What's done
-- Idea pass (hackathon-idea-hack): Booth = real-time VO director. Collision-checked name.
-- Protocol research complete: Voice Agent API (token mint, WS sequence, inline tools, reply.create, session.end discipline), sync API (universal-3-5-pro, timestamps:true, ms words).
-- Design direction locked (design.md), sponsor tokens verified from live CSS.
-- PRD/Architecture/Tasks/Memory/AGENTS/ORCHESTRATOR written.
+- Idea pass + design + naming + spec docs (see ORCHESTRATOR.md ledger)
+- `/api/token` (temp token mint) and `/api/sync` (universal-3.5-pro proxy, timestamps)
+- `lib/voice-agent.ts` (WS client: inline config, tools, reply.create, session.end discipline)
+- `lib/capture.ts` + `public/pcm-processor.js` (AudioWorklet mic → 24k WS feed + full-rate master)
+- `lib/script.ts` (parsing, token Levenshtein, numeric-flub detection), `lib/takes.ts`, `lib/splice.ts`
+- `/booth` (script → live → wrapped phases, slate stamp, level strip, take log, master download)
+- Landing with live proof widget running the real pipeline on `public/badtake.wav` (macOS-synthesized bad take, misreads planted on lines 3 and 7)
+- README (judge path + honesty table), docs/submission/ (OVERVIEW, RUBRIC_MAP, DEMO_SCRIPT), og.png
+- Repo: https://github.com/A-Raphie/booth (pushed)
 
 ## In progress
-- create-next-app scaffold (Tailwind 4, App Router, TS).
+- Nothing mid-flight; next is the live-audio verification block.
 
 ## Blocked / waiting
-- ASSEMBLYAI_API_KEY — needed from raphie for deployed token route; BYO-key fallback exists for local dev.
+- **ASSEMBLYAI_API_KEY** from raphie: needed for the deployed token/sync routes and for any live testing.
+- **Deploy go**: Vercel deploy is a stop-condition item per AGENTS.md (publishing) — awaiting explicit go.
+- **Submission go**: lablab submission happens only on explicit go.
 
 ## How to run it
 ```bash
 npm install
-npm run dev          # http://localhost:3000
-npm run build        # must pass before deploy
+npm run dev            # BYO key via the in-app panel if no env var
+npm run build && npm start
 ```
 
-## Next steps
-1. Verify scaffold green.
-2. Phase 0: `/api/token` route → WS hello-world in browser.
-3. Then Tasks.md Phase 1 (director loop).
+## Next steps (Sep 29)
+1. Raphie supplies `ASSEMBLYAI_API_KEY` (+ deploy go) → deploy to Vercel, set env var, verify URL incognito.
+2. Live test with real mic: greeting plays → read 3 lines → plant a number flub → cut-in fires → wrap → master downloads. Fix what breaks (likely: voice name validity, reply.create field name, resampling artifacts).
+3. Record demo video per docs/submission/DEMO_SCRIPT.md (demo-script → vo-first chain).
+4. Gates: mock-hunter, claims-verify, pre-ship-gate, fixing-metadata sweep.
+5. Submit on lablab (explicit go), then keep-alive + post-hackathon.
 
 ## Open questions
-- Which bundled voice for the director (docs show `anna`, `alba`).
+- Director voice: `alba` assumed valid; confirm on first live session, swap to `anna` if rejected.
+- `reply.create` instructions field name assumed; verify live.
 
 ## Pointers
 - Spec: [PRD.md](./PRD.md) · [Architecture.md](./Architecture.md) · [design.md](./design.md)
