@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+@theme {
+  /* Sponsor-verified palette (assemblyai.com CSS, Sep 2026) — warm paper, not dark neon */
+  --color-paper: #f5f3eb;
+  --color-raised: #fdfcf8;
+  --color-sand: #e3dfcd;
+  --color-faint: #d2d1d0;
+  --color-muted: #c7c3b2;
+  --color-ink: #0a0a08;
+  --color-ink-soft: #43413a;
+  --color-ink-fade: #80838d;
+  --color-accent: #887bdd;
+  --color-accent-tint: #e8e4f9;
+  --color-mark: #f7e9a1;
+  --color-cut: #d47849;
+  --color-cut-deep: #c66b3e;
+  --color-clean: #67ad82;
+  --color-clean-deep: #01762f;
+
+  --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+}
+
+/* hairline rules instead of shadows */
+.hairline {
+  border: 1px solid color-mix(in srgb, var(--color-ink) 14%, transparent);
+}
+.hairline-strong {
+  border: 1px solid color-mix(in srgb, var(--color-ink) 24%, transparent);
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-accent-tint);
+  color: var(--color-ink);
+}
+
+/* mono micro-label: console convention */
+.microlabel {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* the slate stamp: single hard snap, then still */
+@keyframes slate-stamp {
+  0% { transform: scale(1.6) rotate(-4deg); opacity: 0; }
+  55% { transform: scale(0.96) rotate(0.5deg); opacity: 1; }
+  75% { transform: scale(1.02) rotate(-0.25deg); }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+.slate-stamp {
+  animation: slate-stamp 380ms cubic-bezier(0.2, 0.9, 0.3, 1) both;
+}
+
+@keyframes rec-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+.rec-dot {
+  animation: rec-pulse 1.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slate-stamp, .rec-dot { animation: none; }
+}
