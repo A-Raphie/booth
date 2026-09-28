@@ -76,8 +76,8 @@ export default function Home() {
             <p className="microlabel mt-3 text-ink-fade">Scrubbing takes, per video, today</p>
           </div>
           <div className="p-8">
-            <div className="font-display text-5xl font-medium">&lt; 2 s</div>
-            <p className="microlabel mt-3 text-ink-fade">From flub to retake call, on the floor</p>
+            <div className="font-display text-5xl font-medium">~3 s</div>
+            <p className="microlabel mt-3 text-ink-fade">From your pause to the retake call</p>
           </div>
           <div className="p-8">
             <div className="font-display text-5xl font-medium">0</div>

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Button, MicroLabel, Panel } from "@/components/kit";
 import { ScriptCanvas } from "@/components/script-canvas";
 import { SlateStamp } from "@/components/slate-stamp";
-import { LevelStrip } from "@/components/level-strip";
+import { LevelStrip, TranscriptTicker, type TranscriptState } from "@/components/level-strip";
 import { TakeLog } from "@/components/take-log";
 import { BoothCapture } from "@/lib/capture";
 import { VoiceAgentClient, ToolDef } from "@/lib/voice-agent";
@@ -67,7 +67,7 @@ export default function BoothPage() {
   const [statuses, setStatuses] = useState<Map<number, LineStatus>>(new Map());
   const [currentLine, setCurrentLine] = useState<number | null>(null);
   const [directorLine, setDirectorLine] = useState("");
-  const [level, setLevel] = useState(0);
+  const [sessionClock, setSessionClock] = useState(0);
   const [slate, setSlate] = useState<{ take: number; line: number; reason: string } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [statusNote, setStatusNote] = useState("");
@@ -93,6 +93,9 @@ export default function BoothPage() {
   const nudgeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const flubNudgeRef = useRef<{ line: number; expected: string } | null>(null);
   const wrappedRef = useRef(false);
+  const levelRef = useRef(0);
+  const transcriptRef = useRef<TranscriptState>({ delta: "", finals: [] });
+  const clockRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const lines = useMemo(() => parseScript(scriptText), [scriptText]);
   linesRef.current = lines;
@@ -179,11 +182,19 @@ export default function BoothPage() {
         onReady: () => setStatusNote("Director on the floor"),
         onAgentAudio: (b64) => scheduleAgentAudio(b64),
         onAgentTranscript: (t) => setDirectorLine(t),
-        onSpeechStarted: () => stopPlayback(),
         onReplyDone: () => {
           playQueueRef.current.nextAt = 0;
         },
+        onUserDelta: (d) => {
+          transcriptRef.current.delta = d;
+        },
+        onSpeechStarted: () => {
+          stopPlayback();
+          transcriptRef.current.delta = "";
+        },
         onUserTranscript: (text) => {
+          transcriptRef.current.delta = "";
+          transcriptRef.current.finals = [...transcriptRef.current.finals, text].slice(-2);
           segmentRef.current.push(text);
           const segTokens = segmentRef.current.flatMap(tokenize);
           const cov = scoreSegmentAgainstScript(segTokens, linesRef.current);
@@ -255,13 +266,18 @@ export default function BoothPage() {
       setStatusNote("Requesting microphone");
       const capture = new BoothCapture(
         (b64) => client.sendAudio(b64),
-        (rms) => setLevel(rms),
+        (rms) => {
+          levelRef.current = rms;
+        },
       );
       captureRef.current = capture;
       await capture.start();
 
       setPhase("live");
       setStatusNote("Recording");
+      const t0 = Date.now();
+      const clock = setInterval(() => setSessionClock(Math.floor((Date.now() - t0) / 1000)), 1000);
+      clockRef.current = clock;
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
       setStatusNote("");
@@ -273,6 +289,7 @@ export default function BoothPage() {
       if (wrappedRef.current) return;
       wrappedRef.current = true;
       setWrapBusy(true);
+      if (clockRef.current) clearInterval(clockRef.current);
       setStatusNote(auto ? "Director called the wrap" : "That's a wrap");
       if (nudgeTimerRef.current) clearTimeout(nudgeTimerRef.current);
       const dur = await clientRef.current?.end();
@@ -401,7 +418,10 @@ export default function BoothPage() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <span className="rec-dot inline-block h-2.5 w-2.5 rounded-full bg-cut" />
-            <MicroLabel>On the floor · {statusNote}</MicroLabel>
+            <MicroLabel>
+              On the floor · {statusNote} · {String(Math.floor(sessionClock / 60)).padStart(2, "0")}:
+              {String(sessionClock % 60).padStart(2, "0")}
+            </MicroLabel>
           </div>
           <Button variant="danger" disabled={wrapBusy} onClick={() => void endSession(false)}>
             That's a wrap
@@ -429,9 +449,15 @@ export default function BoothPage() {
               </p>
             </Panel>
             <Panel className="p-5">
+              <MicroLabel>Live read</MicroLabel>
+              <div className="mt-3">
+                <TranscriptTicker transcriptRef={transcriptRef} />
+              </div>
+            </Panel>
+            <Panel className="p-5">
               <MicroLabel>Level</MicroLabel>
               <div className="mt-3">
-                <LevelStrip level={level} active={phase === "live"} />
+                <LevelStrip levelRef={levelRef} active={phase === "live"} />
               </div>
               <p className="microlabel mt-3 text-ink-fade">Line {String(currentLine ?? 1).padStart(2, "0")} is up</p>
             </Panel>

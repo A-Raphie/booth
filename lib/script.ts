@@ -9,7 +9,12 @@ export function normalizeToken(t: string): string {
 }
 
 export function tokenize(text: string): string[] {
-  return text.split(/\s+/).map(normalizeToken).filter(Boolean);
+  // split on whitespace, hyphens, and slashes first: STT renders "fifty fifty"
+  // as "50/50" and "low acid" as "low-acid", which must match script tokens
+  return text
+    .split(/[\s\-–—/]+/)
+    .map(normalizeToken)
+    .filter(Boolean);
 }
 
 const NUMBER_WORDS: Record<string, string> = {

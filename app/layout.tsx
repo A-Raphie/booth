@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Archivo, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   title: "Booth — the director is listening",
   description:
     "Read your voiceover script out loud. A real-time AI director cuts your flubs, calls retakes, and prints the clean master. Built on the AssemblyAI Voice Agent API.",
-  metadataBase: new URL("https://booth-delta.vercel.app"),
+  metadataBase: new URL("https://booth-ernxtos-projects.vercel.app"),
   openGraph: {
     title: "Booth — the director is listening",
     description:
@@ -29,7 +29,18 @@ export const metadata: Metadata = {
     type: "website",
   },
   twitter: { card: "summary_large_image" },
-  icons: { icon: "/favicon.ico" },
+  manifest: "/manifest.webmanifest",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#f5f3eb",
 };
 
 export default function RootLayout({

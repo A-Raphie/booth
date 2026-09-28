@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button, MicroLabel, Panel } from "./kit";
-import { parseScript, scoreSegmentAgainstScript } from "@/lib/script";
+import { parseScript, scoreSegmentAgainstScript, tokenize } from "@/lib/script";
 import { SAMPLE_SCRIPTS } from "@/lib/samples";
 import { alignWordsToLines, Word } from "@/lib/splice";
 
@@ -50,7 +50,7 @@ export function DemoWidget() {
         const cov = scoreSegmentAgainstScript(
           words
             .filter((w) => w.start != null && w.start >= span.startMs && (w.end ?? 0) <= span.endMs)
-            .map((w) => w.text),
+            .flatMap((w) => tokenize(w.text)),
           [line],
         )[0];
         if (cov && cov.flubbed) flubbed.push(span.line);
@@ -60,7 +60,7 @@ export function DemoWidget() {
         `${spans.length} lines aligned at ${(100 * spans.length / lines.length).toFixed(0)}% · transcript confidence ${(100 * (data.confidence ?? 0)).toFixed(0)}% · flubs caught: ${flubbed.join(", ") || "none"}`,
       );
       setState("done");
-      setNote("The director's slate, stamped from your own read:");
+      setNote("Slates stamped from the read:");
     } catch (e) {
       setState("error");
       setNote(e instanceof Error ? e.message : String(e));
