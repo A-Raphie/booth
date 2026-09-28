@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   title: "Booth — the director is listening",
   description:
     "Read your voiceover script out loud. A real-time AI director cuts your flubs, calls retakes, and prints the clean master. Built on the AssemblyAI Voice Agent API.",
-  metadataBase: new URL("https://booth-ernxtos-projects.vercel.app"),
+  metadataBase: new URL("https://booth-voice.netlify.app"),
   openGraph: {
     title: "Booth — the director is listening",
     description:

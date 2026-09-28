@@ -4,7 +4,7 @@
 
 For anyone who records VO weekly (faceless channels, podcasters, ads), the take loop is 30-60 minutes of scrubbing per video: read, flub, hunt for where you were, fix it in an editor. Booth replaces the loop with a director on the other side of the glass.
 
-**Live:** https://booth-ernxtos-projects.vercel.app · **Event:** [AssemblyAI Voice Agent Hackathon](https://lablab.ai/ai-hackathons/assemblyai-voice-agent-hackathon) (lablab.ai, Sep 2026)
+**Live:** https://booth-voice.netlify.app · **Event:** [AssemblyAI Voice Agent Hackathon](https://lablab.ai/ai-hackathons/assemblyai-voice-agent-hackathon) (lablab.ai, Sep 2026)
 
 ---
 
