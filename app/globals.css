@@ -24,12 +24,26 @@
   --font-mono: var(--font-plex-mono), ui-monospace, monospace;
 }
 
-/* hairline rules instead of shadows */
-.hairline {
-  border: 1px solid color-mix(in srgb, var(--color-ink) 14%, transparent);
-}
-.hairline-strong {
-  border: 1px solid color-mix(in srgb, var(--color-ink) 24%, transparent);
+/* hairline rules instead of shadows.
+   These live in @layer components: unlayered rules would beat Tailwind's
+   utility layer, silently killing text-paper / text-cut-text etc. on
+   microlabel elements (the gray-retake + dim-button-label bug). */
+@layer components {
+  .hairline {
+    border: 1px solid color-mix(in srgb, var(--color-ink) 14%, transparent);
+  }
+  .hairline-strong {
+    border: 1px solid color-mix(in srgb, var(--color-ink) 24%, transparent);
+  }
+
+  /* mono micro-label: console convention */
+  .microlabel {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-ink-soft);
+  }
 }
 
 body {
@@ -52,15 +66,6 @@ body {
 input::placeholder,
 textarea::placeholder {
   color: var(--color-ink-fade);
-}
-
-/* mono micro-label: console convention */
-.microlabel {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--color-ink-soft);
 }
 
 /* paper-toned scrollbar: the default dark thumb clashes with cream */
