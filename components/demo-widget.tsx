@@ -16,6 +16,7 @@ type RunState = "idle" | "running" | "done" | "error";
 export function DemoWidget() {
   const [state, setState] = useState<RunState>("idle");
   const [note, setNote] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
   const [flubs, setFlubs] = useState<number[]>([]);
   const [masterNote, setMasterNote] = useState("");
   const [open, setOpen] = useState(false);
@@ -23,6 +24,7 @@ export function DemoWidget() {
   const run = async () => {
     setState("running");
     setNote("Loading the bad take");
+    setErrorMsg("");
     setFlubs([]);
     setMasterNote("");
     setOpen(true);
@@ -36,7 +38,11 @@ export function DemoWidget() {
       const res = await fetch("/api/sync", { method: "POST", body: form });
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
-        throw new Error(body.error === "missing_api_key" ? "Server needs an AssemblyAI API key for this run." : "Sync transcription failed");
+        throw new Error(
+          body.error === "missing_api_key"
+            ? "This deploy is missing its recording key, so the demo can't transcribe. On a configured deploy, both the demo and live sessions run."
+            : "The transcription step failed. Try again; nothing else was affected.",
+        );
       }
       const data = (await res.json()) as { words?: Word[]; confidence?: number };
       const words = data.words ?? [];
@@ -57,13 +63,14 @@ export function DemoWidget() {
       }
       setFlubs(flubbed);
       setMasterNote(
-        `${spans.length} lines aligned at ${(100 * spans.length / lines.length).toFixed(0)}% · transcript confidence ${(100 * (data.confidence ?? 0)).toFixed(0)}% · flubs caught: ${flubbed.join(", ") || "none"}`,
+        `${spans.length}/${lines.length} lines matched their script · transcription ${(100 * (data.confidence ?? 0)).toFixed(0)}% confident · flubs caught: ${flubbed.join(", ") || "none"}`,
       );
       setState("done");
       setNote("Slates stamped from the read:");
     } catch (e) {
       setState("error");
-      setNote(e instanceof Error ? e.message : String(e));
+      setNote("Could not run the demo");
+      setErrorMsg(e instanceof Error ? e.message : String(e));
     }
   };
 
@@ -80,7 +87,7 @@ export function DemoWidget() {
           </p>
         </div>
         <Button variant="accent" onClick={() => void run()} disabled={state === "running"}>
-          {state === "running" ? "Judging…" : "Run the bad take"}
+          {state === "running" ? "Judging…" : state === "error" ? "Try again" : "Run the bad take"}
         </Button>
       </div>
 
@@ -104,7 +111,7 @@ export function DemoWidget() {
           {state === "done" && masterNote && (
             <p className="microlabel mt-4 text-ink-fade">{masterNote}</p>
           )}
-          {state === "error" && <p className="mt-3 text-sm text-cut-text">{note}</p>}
+          {state === "error" && <p className="mt-3 max-w-prose text-sm text-cut-text">{errorMsg}</p>}
         </div>
       )}
     </Panel>

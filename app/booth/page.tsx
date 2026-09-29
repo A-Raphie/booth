@@ -106,6 +106,7 @@ export default function BoothPage() {
 
   const lines = useMemo(() => parseScript(scriptText), [scriptText]);
   linesRef.current = lines;
+  const readyLines = lines.length;
 
   const refreshEngine = useCallback(() => {
     if (!engineRef.current) return;
@@ -393,19 +394,39 @@ export default function BoothPage() {
           onChange={(e) => setScriptText(e.target.value)}
           rows={14}
           spellCheck={false}
+          placeholder="Paste your voiceover script here. One line per line."
           className="hairline mt-6 w-full resize-none bg-raised p-6 font-mono text-sm leading-relaxed outline-none focus:border-accent"
         />
 
         <div className="mt-6 flex items-center gap-4">
-          <Button onClick={() => void startSession()}>Take your position</Button>
-          <span className="microlabel text-ink-fade">{statusNote}</span>
+          <Button onClick={() => void startSession()} disabled={readyLines < 2}>
+            Take your position
+          </Button>
+          <span className="microlabel text-ink-fade">
+            {readyLines < 2 ? "Paste or load a script first" : statusNote}
+          </span>
         </div>
+        {error && <p className="mt-3 max-w-prose text-sm text-cut-text">{error}</p>}
         {needKey && (
           <Panel className="mt-6 max-w-xl p-6">
-            <MicroLabel>No server key</MicroLabel>
+            <MicroLabel>Recording key needed</MicroLabel>
             <p className="mt-2 text-sm text-ink-soft">
-              The deploy has no ASSEMBLYAI_API_KEY yet. Paste your AssemblyAI key to run
-              this session; it stays in this browser and is sent only to mint tokens.
+              This deploy isn't configured with its own recording key, so live sessions
+              need yours. Paste an AssemblyAI key to run this session; it stays in this
+              browser and is sent only to start recordings. No key yet?{" "}
+              <a
+                href="https://www.assemblyai.com/dashboard/api-keys"
+                target="_blank"
+                rel="noreferrer"
+                className="underline decoration-accent underline-offset-4"
+              >
+                Get a free one
+              </a>
+              , or try the demo on the{" "}
+              <Link href="/" className="underline decoration-accent underline-offset-4">
+                front page
+              </Link>
+              .
             </p>
             <div className="mt-4 flex gap-2">
               <input
@@ -419,7 +440,6 @@ export default function BoothPage() {
             </div>
           </Panel>
         )}
-        {error && <p className="mt-4 max-w-prose text-sm text-cut-text">{error}</p>}
         <p className="microlabel mt-10 text-ink-fade">
           Mic on · echo cancellation on · audio never leaves your browser except as text
         </p>

@@ -27,7 +27,7 @@ const STEPS = [
 
 export default function Home() {
   return (
-    <main className="mx-auto max-w-6xl px-6">
+    <main className="mx-auto max-w-6xl px-6 pb-20 md:pb-10">
       {/* Wordmark bar */}
       <header className="flex items-center justify-between border-b border-ink/10 py-5">
         <span className="microlabel text-ink">Booth</span>
@@ -65,7 +65,7 @@ export default function Home() {
 
       {/* How it works */}
       <section className="mt-16 md:mt-20">
-        <p className="microlabel text-ink-fade">The session</p>
+        <h2 className="microlabel text-ink-fade">The session</h2>
         <div className="mt-8 grid gap-px bg-ink/10 md:grid-cols-4">
           {STEPS.map((s) => (
             <div key={s.n} className="bg-paper p-6">
@@ -97,7 +97,7 @@ export default function Home() {
 
       {/* Dev section: the sponsor primitive, shown not told */}
       <section className="mt-16 md:mt-20">
-        <p className="microlabel">Under the glass</p>
+        <h2 className="microlabel">Under the glass</h2>
         <div className="mt-8 grid gap-8 md:grid-cols-2">
           <div>
             <h2 className="font-display text-3xl font-medium tracking-tight">
