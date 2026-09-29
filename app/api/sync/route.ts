@@ -52,9 +52,12 @@ export async function POST(req: Request) {
 
   if (!res.ok) {
     const detail = await res.text().catch(() => "");
+    // pass client errors (bad audio, too large) through as 4xx; only upstream
+    // server failures become 502 — the UI treats these differently
+    const status = res.status >= 400 && res.status < 500 ? res.status : 502;
     return NextResponse.json(
       { error: "sync_rejected", upstream_status: res.status, detail: detail.slice(0, 500) },
-      { status: 502 },
+      { status },
     );
   }
 
