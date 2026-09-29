@@ -42,8 +42,8 @@ export default function Home() {
             The director is listening.
           </h1>
           <p className="mt-8 max-w-xl text-xl leading-relaxed text-ink-soft">
-            Read your voiceover script out loud. Booth hears every flub, cuts you off with the
-            exact line to redo, and hands you a clean master when you wrap.
+          Read your voiceover script out loud. Booth listens to every word, cuts you off
+          with the exact line to redo, and hands you a clean master when you wrap.
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-4">
             <Link
@@ -85,8 +85,8 @@ export default function Home() {
             <p className="microlabel mt-3 text-ink-fade">Scrubbing takes, per video, today</p>
           </div>
           <div className="p-8">
-            <div className="font-display text-5xl font-medium">~3 s</div>
-            <p className="microlabel mt-3 text-ink-fade">From your pause to the retake call</p>
+            <div className="font-display text-5xl font-medium">1.8 s</div>
+            <p className="microlabel mt-3 text-ink-fade">After your pause, the cut is triggered, by design</p>
           </div>
           <div className="p-8">
             <div className="font-display text-5xl font-medium">0</div>

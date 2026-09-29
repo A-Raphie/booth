@@ -28,6 +28,7 @@ Everything above is deterministic except steps 4-5, which are live voice.
 | Master assembled from word-level timestamps | Real | Sync API (`universal-3.5-pro`, `timestamps: true`); best-scoring read per line spliced with fades in-browser |
 | Demo widget | Real pipeline | Runs sync transcription + alignment + scoring on bundled audio at press time; no mocks |
 | Cut-ins fire mid-sentence | Honest gap | The agent replies after end-of-turn (you pause, then get cut) — a real director's beat, not literal barge-in. A client-side nudge (`reply.create`) forces the call when a flub ends in silence |
+| The director cuts on every flub, every time | Honest gap | The director is an LLM: on rare reads it may skip a cut. Number flubs — the most common VO error — have a deterministic client-side backstop (numeric mismatch detection fires the cut 1.8 s after the pause) |
 | Demo audio is a human | Honest gap | Synthesized on macOS for a deterministic demo; bring your own mic for the live path |
 | "Print master" always perfect | Honest gap | Line selection is alignment-score based; if a line never gets a clean read it stays flubbed in the take log and the raw session WAV is provided |
 
