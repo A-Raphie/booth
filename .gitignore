@@ -46,3 +46,8 @@ next-env.d.ts
 # showcase raw takes (regenerable via scripts/record-scenes.js)
 media/raw/
 media/scene-*.mp4
+renders/vo-full.wav
+renders/bgm.wav
+renders/director-cut.wav
+renders/s*.mp4
+renders/list.txt
