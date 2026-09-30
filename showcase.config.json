@@ -1,0 +1,79 @@
+{
+  "project": {
+    "name": "Booth",
+    "tagline": "The director is listening: real-time AI direction for voiceover takes",
+    "track": "AssemblyAI Voice Agent Hackathon · lablab.ai",
+    "baseUrl": "https://booth-voice.netlify.app",
+    "faviconPath": "public/icon-192.png",
+    "accentColor": "#887bdd",
+    "brandRepo": "github.com/A-Raphie/booth"
+  },
+  "tier": {
+    "name": "lightning",
+    "targetDuration": 72,
+    "hardCap": 78,
+    "wordCountBudget": 180,
+    "layoutMode": "fullscreen"
+  },
+  "scenes": [
+    {
+      "id": "scene-1-hook",
+      "type": "browser",
+      "route": "/",
+      "tabTitle": "Booth — the director is listening",
+      "duration": 12,
+      "mediaStart": 0.5,
+      "pill": "45 min · lost per video, today",
+      "cardTitle": "The Take Loop",
+      "cardStat": "Read · Flub · Scrub · Repeat",
+      "vo": "Forty five minutes. That is what a voiceover creator loses scrubbing raw takes, every single video. Read the line, flub the number, hunt for it later."
+    },
+    {
+      "id": "scene-2-proof",
+      "type": "browser",
+      "route": "/",
+      "tabTitle": "Booth — live proof, no mic needed",
+      "duration": 16,
+      "mediaStart": 2.0,
+      "pill": "Real judge pipeline · live on screen",
+      "cardTitle": "Flubs Caught",
+      "cardStat": "Lines 03 and 07 · 97% confident",
+      "vo": "This is Booth. A deliberately bad take runs through the real judge pipeline: transcribed by AssemblyAI, aligned to the script, and two misreads are caught on screen."
+    },
+    {
+      "id": "scene-3-live",
+      "type": "terminal",
+      "title": "booth — live session — agents.assemblyai.com — zsh",
+      "duration": 18,
+      "mediaStart": 0.0,
+      "pill": "Live Voice Agent API · real session",
+      "cardTitle": "The Director Cuts",
+      "cardStat": "call_retake · spoken on the floor",
+      "vo": "Now live, on AssemblyAI's Voice Agent API. The director hears the read, cuts the flub, and calls the retake by line number. Every cut is a tool call the agent made."
+    },
+    {
+      "id": "scene-4-booth",
+      "type": "browser",
+      "route": "/booth",
+      "tabTitle": "Set the script · Booth",
+      "duration": 14,
+      "mediaStart": 1.0,
+      "pill": "Wrap the session · print the master",
+      "cardTitle": "Master WAV",
+      "cardStat": "Best read per line · spliced in browser",
+      "vo": "Set your script, read it out loud, and wrap. Booth prints the master: the best read of every line, spliced from word level timestamps, right in your browser."
+    },
+    {
+      "id": "scene-5-close",
+      "type": "outro",
+      "duration": 12,
+      "badge": "booth-voice.netlify.app · github.com/A-Raphie/booth",
+      "vo": "Booth is live now. The demo voice is synthesized. Bring yours. The director is listening."
+    }
+  ],
+  "outro": {
+    "duration": 12,
+    "badge": "booth-voice.netlify.app · MIT · built by Raphie",
+    "vo": "Booth is live now. The demo voice is synthesized. Bring yours. The director is listening."
+  }
+}

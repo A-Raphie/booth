@@ -1,0 +1,10 @@
+  0.68  $ node scripts/live-session.mjs
+  0.68  → session.update  (voice: alba · tools: 3)
+  1.09  ← session.ready   sess_d730fb15092948f4bc4b91f30550d608
+  1.09  ← streaming talent audio (synthetic bad take, 28.9s)
+  7.67  ← ALBA: "Step up to the glass."
+ 31.70  ← transcript.user "…bitterness, just the deepest, sweetest cup you have ever made at home."
+ 31.70  ← ALBA: "Step up to the glass. Read line"
+ 33.05  ← tool.call call_retake {"from_line":1,"reason":"Line one was eighteen hours, not eight."}
+ 39.59  → session.end
+ 39.86  ← session.ended  (39.0s billed)

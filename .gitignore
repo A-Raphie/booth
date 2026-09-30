@@ -42,3 +42,7 @@ next-env.d.ts
 
 # Local Netlify folder
 .netlify
+
+# showcase raw takes (regenerable via scripts/record-scenes.js)
+media/raw/
+media/scene-*.mp4
